@@ -1,0 +1,120 @@
+@media screen and (min-width: 800px) {
+    .app-bar {
+        &__brand {
+            h1 {
+                font-size: 2em;
+            }
+        }
+    } 
+}
+
+@media screen and (max-width: 768px) {
+    .resto__list, .favorite__content {
+        &__best, &__all, &__list {
+            resto-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    }
+
+    .detail-content {
+        detail-header {
+            .resto__header {
+                &__info {
+                    &__title {
+                        font-size: 1.5em;
+                    }
+                    &__detail {
+                        font-size: 0.8em;
+                        padding: 5px 0;
+                    }
+                    &__address {
+                        padding: 5px 0;
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+
+        .food__list, .drink__list {
+            food-menu, drink-menu {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 670px) {
+    .app-bar {
+        grid-template-columns: 1fr auto;
+        padding: 0 32px;
+
+        &__brand {
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        &__menu {
+            display: none;
+        }
+
+        &__navigation {
+            position: static;
+            width: 100%;
+
+            ul {
+                li {
+                    display: inline-block;
+
+                    a {
+                        display: inline-block;
+                        width: 120px;
+                        text-align: center;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 670px) {
+    hero-item {
+        .hero__inner {
+            &__title {
+                font-size: 1.3em;
+            }
+            &__tagline {
+                font-size: 1em;
+            }
+        }
+    }
+    .detail-content {
+        detail-header {
+            .resto__header {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .food__list, .drink__list, .consumer__review__list {
+            food-menu, drink-menu, consumer-review {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    hero-item {
+        background-image: url("../public/images/hero-image_small.jpg");
+    }
+    .resto__list, .favorite__content {
+        &__best, &__all, &__list {
+            resto-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}

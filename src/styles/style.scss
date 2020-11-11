@@ -1,0 +1,712 @@
+/*
+ * Color picker
+ */
+
+ $text-color: rgb(22, 22, 22);
+ $primary-color: rgb(221, 34, 34);
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+body {
+    background-color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/*
+  AppBar
+*/
+
+.app-bar {
+    padding: 0 16px;
+    background-color: white;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
+    &__menu {
+        display: flex;
+        align-items: center;
+
+        button {
+            background-color: transparent;
+            border: none;
+            font-size: 25px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    }
+
+    &__brand {
+        display: flex;
+        align-items: center;
+
+        h1 {
+            color: $text-color;
+            text-transform: uppercase;
+            font-size: 15px;
+            user-select: none;
+            letter-spacing: 3px;
+
+            span {
+                color: $primary-color;
+            }
+        }
+    }
+
+    &__navigation {
+        position: absolute;
+        top: 50px;
+        left: -180px;
+        width: 150px;
+        transition: all 0.3s;
+        padding: 8px;
+        background-color: white;
+        overflow: hidden;
+
+        &.open {
+            left: 0;
+        }
+
+        ul {
+            li {
+                a {
+                    display: inline-block;
+                    text-decoration: none;
+                    color: $text-color;
+                    font-weight: bold;
+                    padding: 12px 8px;
+                    margin-bottom: 5px;
+                    width: 100%;
+                    position: relative;
+    
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+ * Jumbotron
+ */
+
+hero-item {
+    display: flex;
+    align-items: center;
+    min-height: 380px;
+    width: 100%;
+    text-align: center;
+    background-image: url("../public/images/hero-image_large.jpg");
+    background-position: center;
+    background-color: green;
+
+    .hero__inner {
+        margin: 0 auto;
+        max-width: 800px;
+
+        &__title {
+            color: #fff;
+            font-weight: 500;
+            font-size: 2em;
+        }
+
+        &__tagline {
+            color: #fff;
+            margin-top: 10px;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+    }
+}
+
+/*
+ * Daftar Restoran Populer
+ */
+
+ @mixin title($padding) {
+    text-align: center;
+    padding-top: $padding;
+    padding-bottom: $padding;
+ }
+
+ @mixin underline($mg-top) {
+    position: absolute;
+    content: "";
+    width: 100px;
+    height: 2px;
+    background-color: $primary-color;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: $mg-top;
+ }
+
+ @mixin cards($grid-frame, $gap)  {
+    margin: 0 auto;
+    padding: 30px;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: $grid-frame;
+    gap: $gap;
+ }
+
+ @mixin card-detail($color) {
+    background-color: $color;
+    border-radius: 15px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+ }
+
+ @mixin card-image {
+    width: 100%;
+    max-height: 200px;
+    border-radius: 15px 15px 0 0;
+    display: block;
+    object-fit: cover;
+ }
+
+ @mixin template-icon($border-radius) {
+    position: absolute;
+    padding: 8px;
+    display: inline-block;
+    background-color: $primary-color;
+    color: #fff;
+    font-size: 0.8em;
+    border-radius: $border-radius;
+ }
+
+ @mixin icon-detail {
+    font-size: 1em;
+    margin-right: 4px;
+ }
+
+ @mixin card-content {
+    padding: 15px 15px 0 15px;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 400;
+ }
+
+ @mixin card-content-desc {
+    margin-top: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+ @mixin template-link {
+    margin: 1.5rem;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 400;
+}
+
+@mixin link-detail {
+    padding: 14px 16px;
+    text-decoration: none;
+    color: $primary-color;
+    border-radius: 5px;
+}
+
+.resto__list {
+    background-color: whitesmoke;
+    padding-bottom: 30px;
+
+    &__best, &__all {
+    
+        &__title {
+            @include title(30px);
+    
+            h2 {
+                font-size: 1.3em;
+            }
+    
+            p {
+                font-size: 1em;
+                font-style: italic;
+            }
+    
+            &:after {
+                @include underline(20px);
+            }
+        }
+    
+        resto-cards {
+            @include cards(repeat(3, 1fr), 20px);
+            
+            .card__item {
+                @include card-detail(white);
+
+                &__header {
+                    position: relative;
+
+                    &__image {
+                        @include card-image;
+                    }
+
+                    &__icon__location {
+                        @include template-icon(0 5px 5px 0);
+                        left: 0;
+                        top: 20px;
+
+                        i {
+                            @include icon-detail;
+                        }
+                    }
+
+                    &__icon__rating {
+                        @include template-icon(10px);
+                        right: 20px;
+                        bottom: 20px;
+
+                        i {
+                            @include icon-detail;
+                        }
+                    }
+                }
+
+                &__content {
+                    @include card-content;
+
+                    .skeleton {
+                        user-select: none;
+                        background-color: #eeeeee;
+                        color: #eeeeee;
+                    }
+
+                    p {
+                        @include card-content-desc;
+                    }
+                }
+
+                &__link {
+                    @include template-link;
+
+                    a {
+                        @include link-detail;
+
+                        &:hover {
+                            background-color: $primary-color;
+                            color: #fff;
+                            transition: .3s background ease;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+  Detail
+*/
+
+.detail-content {
+    background-color: whitesmoke;
+    min-height: 100vh;
+
+    /* Header */
+
+    detail-header {
+        .resto__header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+            margin: 0 auto;
+            max-width: 1000px;
+
+            &__image {
+                img {
+                    width: 100%;
+                    border-radius: 10px;
+                    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+                    object-fit: cover;
+                }
+            }
+
+            &__info {
+                display: block;
+                background-color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+
+                &__detail {
+                    padding: 10px 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 50%;
+                    color: rgb(148, 148, 148);
+
+                    i {
+                        font-size: 1em;
+                        margin-right: 4px;
+                        color: $primary-color;
+                    }
+                }
+
+                &__address {
+                    padding: 10px 0;
+                }
+
+                &__description {
+                    text-align: justify;
+                    font-size: 0.8em;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5;
+                    -webkit-box-orient: vertical;
+                }
+            }
+        }
+    }
+
+    /* Menu */
+
+    .category__list {
+
+        &__title {
+            @include title(10px);
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            &:after {
+                @include underline(10px);
+            }
+        }
+
+        menu-category {
+            margin: 0 auto;
+            padding: 30px;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+
+            .category__item {
+                @include card-detail($primary-color);
+                color: white;
+                display: flex;
+                margin: 0 10px;
+                padding: 10px 15px;
+                align-items: center;
+
+                &__icon {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+    .food__list, .drink__list {
+
+        &__title {
+            @include title(10px);
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            &:after {
+                @include underline(10px);
+            }
+        }
+
+        food-menu, drink-menu {
+            @include cards(repeat(6, 1fr), 20px);
+
+            .menu__item {
+                @include card-detail(white);
+                text-align: center;
+
+                &__icon {
+                    color: $primary-color;
+                    padding: 10px;
+
+                    i {
+                        font-size: 2.5em;
+                    }
+                }
+
+                &__name {
+                    font-size: 1em;
+                    padding-bottom: 20px;
+                }
+            }
+        }
+    }
+
+    /* Review */
+
+    .consumer__review__list, .form__review {
+
+        &__title {
+            @include title(10px);
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            &:after {
+                @include underline(10px);
+            }
+        }
+    }
+
+    .consumer__review__list {
+        consumer-review {
+            @include cards(repeat(3, 1fr), 20px);
+
+            .review__item {
+                @include card-detail(white);
+                
+                &__name {
+                    display: flex;
+                    padding: 10px;
+                    align-items: center;
+
+                    i {
+                        font-size: 2em;
+                        padding-right: 8px;
+                        color: $primary-color;
+                    }
+                }
+
+                &__date {
+                    padding-left: 10px;
+
+                    p {
+                        color: rgb(148, 148, 148);
+                        font-size: 0.8em;
+                    }
+                }
+
+                &__content {
+                    padding: 10px;
+
+                    p {
+                        font-style: italic;
+                    }
+                }
+            }
+        }
+    }
+
+    .form__review {
+        form-review {
+            .form__item {
+                margin: 0 auto;
+                padding: 30px;
+                max-width: 500px;
+
+                &__group {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    justify-content: center;
+
+                    label {
+                        margin: 0 auto;
+                        padding: 8px 0;
+                    }
+
+                    input, textarea {
+                        padding: 5px;
+                        border: 2px solid $primary-color;
+                        border-radius: 5px;
+                    }
+
+                    button {
+                        padding: 15px 0;
+                        width: 40%;
+                        margin: 20px auto;
+                        border: 0;
+                        background-color: $primary-color;
+                        color: white;
+                        border-radius: 5px;
+                        font-weight: 600;
+                        font-size: 1em;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        transition: .3s background ease;
+
+                        &:hover {
+                            background-color: rgb(165, 11, 11);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+  Favorite
+*/
+
+.favorite__content {
+    @extend .detail-content;
+
+    &__list {
+        padding: 30px;
+        margin: 0 auto;
+        max-width: 1000px;
+
+        &__title {
+            @include title(10px);
+
+            h2 {
+                font-size: 1.3em;
+            }
+
+            &:after {
+                @include underline(10px);
+            }
+        }
+
+        resto-cards {
+            @include cards(repeat(3, 1fr), 20px);
+            
+            .card__item {
+                @include card-detail(white);
+
+                &__header {
+                    position: relative;
+
+                    &__image {
+                        @include card-image;
+                    }
+
+                    &__icon__location {
+                        @include template-icon(0 5px 5px 0);
+                        left: 0;
+                        top: 20px;
+
+                        i {
+                            @include icon-detail;
+                        }
+                    }
+
+                    &__icon__rating {
+                        @include template-icon(10px);
+                        right: 20px;
+                        bottom: 20px;
+
+                        i {
+                            @include icon-detail;
+                        }
+                    }
+                }
+
+                &__content {
+                    @include card-content;
+
+                    p {
+                        @include card-content-desc;
+                    }
+                }
+
+                &__link {
+                    @include template-link;
+
+                    a {
+                        @include link-detail;
+
+                        &:hover {
+                            background-color: $primary-color;
+                            color: #fff;
+                            transition: .3s background ease;
+                        }
+                    }
+                }
+            }
+        }
+        &__blank {
+            margin-top: 30px;
+
+            p {
+                text-align: center;
+            }
+        }
+    }
+}
+
+/*
+  Footer
+*/
+ 
+footer {
+    padding: 16px;
+
+    p {
+        text-align: center;
+        color: #aaaaaa;
+
+        span {
+            color: $primary-color;
+            text-decoration: none;
+        }
+    }
+}
+
+/*
+   Like
+*/
+.like {
+    font-size: 18px;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background-color: $primary-color;
+    color: white;
+    border: 0;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+   Skip to content
+*/
+
+.skip-link {
+    position: absolute;
+    top: -70px;
+    left: 0;
+    background-color: #bf1722;
+    color: white;
+    padding: 12px;
+    z-index: 100;
+
+    &:focus {
+        top: 0;
+        left: 50%;
+    }
+}
+
